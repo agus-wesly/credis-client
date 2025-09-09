@@ -8,11 +8,6 @@ ZADD churn 7 g
 
 ZRANK churn d
 
-ZADD churn 0.1 d
-ZADD churn 100 e
-ZADD churn 2.5 a
-
-ZRANK churn d
-ZRANK churn e
-ZRANK churn a
-ZRANK churn g
+SET foo bar
+SET name wesly
+KEYS

@@ -341,57 +341,28 @@ char *read_file(const char *file_path) {
     return buff;
 }
 
-int main()
+int main(int argc, char * argv[])
 {
     int fd, conn_fd;
     setup_connection(&fd, &conn_fd);
 
-    bool s_cont = true;
-    // char line[1024];
-    // while (s_cont)
-    // {
-    //     printf("> ");
-    //     memset(line, 0, sizeof(line));
-    //     // [GET, ID]
-    //     if (!fgets(line, sizeof(line), stdin))
-    //         break;
+    if (argc == 1) {
+        bool s_cont = true;
+        char line[1024];
+        while (s_cont)
+        {
+            printf("> ");
+            memset(line, 0, sizeof(line));
+            // [GET, ID]
+            if (!fgets(line, sizeof(line), stdin))
+                break;
 
-    //     if (line[0] == '\n')
-    //         break;
+            if (line[0] == '\n')
+                break;
 
-    //     char **input = NULL;
-    //     arr_init(input);
+            char **input = NULL;
+            arr_init(input);
 
-    //     char *pch = NULL;
-    //     pch = strtok(line, " \n");
-    //     while (pch != NULL)
-    //     {
-    //         arr_push(input, pch);
-    //         pch = strtok(NULL, " \n");
-    //     }
-
-    //     // printf("Length : %d\n", arr_len(input));
-    //     // for(int i=0;i<arr_len(input); ++i) {
-    //     //     printf("%s,", input[i]);
-    //     // }
-    //     // printf("\n");
-
-
-    //     send_request(fd, input, arr_len(input));
-    //     process_response(fd);
-    // }
-
-
-    char *content = read_file("./src/set_test.txt");
-
-
-    char *line = NULL;
-    while ((line = read_line(content)) != NULL) {
-        char **input = NULL;
-        arr_init(input);
-
-        size_t len = strlen(line);
-        if (len > 0) {
             char *pch = NULL;
             pch = strtok(line, " \n");
             while (pch != NULL)
@@ -399,9 +370,41 @@ int main()
                 arr_push(input, pch);
                 pch = strtok(NULL, " \n");
             }
+
+            // printf("Length : %d\n", arr_len(input));
+            // for(int i=0;i<arr_len(input); ++i) {
+            //     printf("%s,", input[i]);
+            // }
+            // printf("\n");
+
+
             send_request(fd, input, arr_len(input));
             process_response(fd);
         }
+
+    }
+
+    else if (argc == 2){
+        char *content = read_file(argv[1]);
+        char *line = NULL;
+        while ((line = read_line(content)) != NULL) {
+            char **input = NULL;
+            arr_init(input);
+
+            size_t len = strlen(line);
+            if (len > 0) {
+                char *pch = NULL;
+                pch = strtok(line, " \n");
+                while (pch != NULL)
+                {
+                    arr_push(input, pch);
+                    pch = strtok(NULL, " \n");
+                }
+                send_request(fd, input, arr_len(input));
+                process_response(fd);
+            }
+        }
+
     }
 
     close(conn_fd);
