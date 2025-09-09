@@ -1,0 +1,18 @@
+ZADD churn 1 a
+ZADD churn 2 b
+ZADD churn 3 c
+ZADD churn 4 d
+ZADD churn 5 e
+ZADD churn 6 f
+ZADD churn 7 g
+
+ZRANK churn d
+
+ZADD churn 0.1 d
+ZADD churn 100 e
+ZADD churn 2.5 a
+
+ZRANK churn d
+ZRANK churn e
+ZRANK churn a
+ZRANK churn g

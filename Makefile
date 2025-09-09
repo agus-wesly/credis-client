@@ -4,7 +4,7 @@ CFLAGS= -Wall -Wextra -std=c11 -pedantic -ggdb
 SRC_DIR=src
 OBJ_DIR=obj
 
-TARGET=credis
+TARGET=client
 
 SRCS=$(wildcard $(SRC_DIR)/*.c)
 OBJS=$(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
